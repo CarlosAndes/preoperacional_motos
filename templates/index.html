@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>Preoperacional Escuela</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet"
-href="{{ url_for('static', filename='css/estilos.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
 
 <style>
 
@@ -22,17 +22,17 @@ margin:0;
 width:95%;
 max-width:750px;
 margin:auto;
-padding:15px;
+padding:20px;
 background:white;
 border-radius:20px;
 box-shadow:0 0 15px rgba(0,0,0,.1);
 margin-bottom:20px;
+box-sizing:border-box;
 }
 
 input,
 select,
-textarea,
-button{
+textarea{
 
 width:100%;
 padding:14px;
@@ -50,14 +50,18 @@ resize:none;
 }
 
 button{
-cursor:pointer;
+padding:14px;
 border:none;
+border-radius:10px;
+cursor:pointer;
+font-size:16px;
 }
 
 .btnMoto{
 background:#007bff;
 color:white;
-font-weight:bold;
+width:100%;
+margin-top:10px;
 }
 
 .motoContainer{
@@ -70,49 +74,53 @@ margin:auto;
 .motoContainer img{
 width:100%;
 height:auto;
-border-radius:15px;
 }
 
 .punto{
 position:absolute;
-width:35px;
-height:35px;
+width:40px;
+height:40px;
 border-radius:50%;
 font-weight:bold;
-font-size:12px;
 color:white;
 border:none;
 }
 
-.bloqueado{
-background:gray;
-}
-
-.activo{
-background:red;
-}
-
-.completado{
-background:green;
-}
+.bloqueado{background:gray}
+.activo{background:red}
+.completado{background:green}
 
 table{
-width:100%;
 background:white;
 border-collapse:collapse;
+width:100%;
 display:block;
 overflow-x:auto;
-font-size:12px;
 }
 
 th,td{
 padding:10px;
+font-size:14px;
 }
 
 @media(max-width:768px){
 
-h1{
-font-size:24px;
+.caja{
+width:98%;
+padding:15px;
+}
+
+.motoContainer{
+transform:scale(1.25);
+transform-origin:top center;
+margin-top:70px;
+margin-bottom:120px;
+}
+
+.punto{
+width:42px;
+height:42px;
+font-size:13px;
 }
 
 }
@@ -127,14 +135,13 @@ font-size:24px;
 
 <img
 src="{{ url_for('static', filename='img/suroede.jpg') }}"
-style="width:100%;max-width:350px;border-radius:10px;">
+style="width:100%;max-width:350px;border-radius:10px">
 
 <h1>Preoperacional Autoescuela Suroeste</h1>
 
-<p>Sistema de inspección motocicletas</p>
+<p>Sistema de inspección preoperacional motocicletas</p>
 
 </div>
-
 
 <div class='caja'>
 
@@ -142,19 +149,13 @@ style="width:100%;max-width:350px;border-radius:10px;">
 
 <label>Encargado del día</label>
 
-<select id='encargado'
-onchange='mostrarOtro()'>
+<select id='encargado' onchange='mostrarOtro()'>
 
 <option>Seleccione encargado</option>
-
 <option>Carlos Mario Osorio Taborda</option>
-
 <option>Daniel Hernando Posada Gallego</option>
-
 <option>Julian Andres Gonzalez Velasquez</option>
-
 <option>Carlos Alberto Tamayo Camacho</option>
-
 <option>Otro...</option>
 
 </select>
@@ -164,9 +165,7 @@ placeholder='Escriba nombre'
 id='otroNombre'
 style='display:none'>
 
-<input
-placeholder='Documento'
-id='documento'>
+<input placeholder='Documento' id='documento'>
 
 <input
 placeholder='Placa'
@@ -174,9 +173,7 @@ id='placa'
 style='text-transform:uppercase'
 oninput='this.value=this.value.toUpperCase()'>
 
-<input
-placeholder='Kilometraje'
-id='kilometraje'>
+<input placeholder='Kilometraje' id='kilometraje'>
 
 <label>Fecha y hora</label>
 
@@ -185,18 +182,14 @@ type='datetime-local'
 id='fecha'
 readonly>
 
-<br><br>
-
-<button
-class='btnMoto'
+<button class='btnMoto'
 onclick="mostrarMoto('cambios')">
 
 🏍️ Moto cambios
 
 </button>
 
-<button
-class='btnMoto'
+<button class='btnMoto'
 onclick="mostrarMoto('automatica')">
 
 🛵 Moto automática
@@ -204,7 +197,6 @@ onclick="mostrarMoto('automatica')">
 </button>
 
 </div>
-
 
 <div id='resultado'></div>
 
@@ -215,21 +207,17 @@ onclick="mostrarMoto('automatica')">
 <h2>Resumen inspección</h2>
 
 <table border='1'>
-
 <tr>
-
 <th>Paso</th>
 <th>Parte</th>
 <th>Estado</th>
 <th>Observación</th>
 <th>Foto</th>
-
 </tr>
 
 <tbody id='tablaEstados'></tbody>
 
 </table>
-
 
 <script>
 
@@ -242,20 +230,21 @@ let pasoActual=0;
 let secuencia=[];
 
 let secuenciaCambios=[
+
 {parte:'Llanta trasera',x:'590px',y:'420px'},
 {parte:'Llanta delantera',x:'70px',y:'420px'},
 {parte:'Luces',x:'120px',y:'190px'},
 {parte:'Direccionales',x:'140px',y:'220px'},
-{parte:'Motor',x:'320px',y:'200px'},
-{parte:'Cadena',x:'470px',y:'300px'}
+{parte:'Motor',x:'320px',y:'200px'}
+
 ];
 
 let secuenciaAutomatica=[
+
 {parte:'Llanta trasera',x:'580px',y:'420px'},
 {parte:'Llanta delantera',x:'80px',y:'420px'},
-{parte:'Luces',x:'120px',y:'200px'},
-{parte:'Direccionales',x:'145px',y:'230px'},
-{parte:'Motor',x:'350px',y:'230px'}
+{parte:'Luces',x:'120px',y:'200px'}
+
 ];
 
 function mostrarOtro(){
@@ -283,24 +272,6 @@ encargado=='Otro...'
 
 function mostrarMoto(tipo){
 
-let encargado=
-document.getElementById(
-'encargado'
-).value;
-
-if(
-encargado==
-'Seleccione encargado'
-){
-
-alert(
-'Seleccione encargado'
-);
-
-return;
-
-}
-
 let ahora=new Date();
 
 ahora.setMinutes(
@@ -313,9 +284,7 @@ document.getElementById(
 'fecha'
 ).value=
 
-ahora
-.toISOString()
-.slice(0,16);
+ahora.toISOString().slice(0,16);
 
 pasoActual=0;
 
@@ -343,35 +312,13 @@ motoCambios
 
 motoAutomatica;
 
-let html=
+let html="<div class='motoContainer'><img src='"+imagen+"'>";
 
-"<div class='motoContainer'><img src='"+imagen+"'>";
+for(let i=0;i<secuencia.length;i++){
 
-for(
-let i=0;
-i<secuencia.length;
-i++
-){
+let clase=i==0?'activo':'bloqueado';
 
-let clase=
-
-i==0
-
-?
-
-'activo'
-
-:
-
-'bloqueado';
-
-html+=
-
-`<button
-id='paso${i}'
-class='punto ${clase}'
-style='left:${secuencia[i].x};top:${secuencia[i].y}'
-onclick='abrirPaso(${i})'>${i+1}</button>`;
+html+=`<button id='paso${i}' class='punto ${clase}' style='left:${secuencia[i].x};top:${secuencia[i].y}' onclick='abrirPaso(${i})'>${i+1}</button>`;
 
 }
 
@@ -387,9 +334,7 @@ function abrirPaso(i){
 
 if(i!=pasoActual){
 
-alert(
-'Debes seguir orden'
-);
+alert('Debes seguir el orden');
 
 return;
 
@@ -406,15 +351,12 @@ document.getElementById(
 <h3>${secuencia[i].parte}</h3>
 
 <select id='estado'>
-
 <option>🟢 Bueno</option>
 <option>🟡 Observación</option>
 <option>🔴 Falla</option>
-
 </select>
 
-<textarea
-id='observacion'></textarea>
+<textarea id='observacion'></textarea>
 
 <input
 type='file'
@@ -427,10 +369,9 @@ id='preview'
 width='150'
 style='display:none'>
 
-<button
-onclick='guardar(${i})'>
+<button onclick='guardar(${i})'>
 
-Guardar
+Guardar registro
 
 </button>
 
@@ -438,17 +379,86 @@ Guardar
 
 }
 
+function guardar(i){
+
+let datos=new FormData();
+
+datos.append(
+'fecha',
+document.getElementById('fecha').value
+);
+
+datos.append(
+'encargado',
+document.getElementById('encargado').value
+);
+
+datos.append(
+'documento',
+document.getElementById('documento').value
+);
+
+datos.append(
+'placa',
+document.getElementById('placa').value
+);
+
+datos.append(
+'kilometraje',
+document.getElementById('kilometraje').value
+);
+
+datos.append(
+'moto',
+secuencia==secuenciaCambios?'Cambios':'Automática'
+);
+
+datos.append(
+'parte',
+secuencia[i].parte
+);
+
+datos.append(
+'estado',
+document.getElementById('estado').value
+);
+
+datos.append(
+'observacion',
+document.getElementById('observacion').value || 'Sin observación'
+);
+
+let archivo=document.getElementById('foto').files[0];
+
+if(archivo){
+
+datos.append(
+'foto',
+archivo
+);
+
+}
+
+fetch('/guardar',{
+method:'POST',
+body:datos
+})
+.then(r=>r.json())
+.then(data=>{
+
+alert("Guardado");
+
+});
+
+}
+
 function mostrarVista(event){
 
 let imagen=
-document.getElementById(
-'preview'
-);
+document.getElementById('preview');
 
 imagen.src=
-URL.createObjectURL(
-event.target.files[0]
-);
+URL.createObjectURL(event.target.files[0]);
 
 imagen.style.display='block';
 
