@@ -1,17 +1,154 @@
 body{
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     background:#f4f4f4;
     text-align:center;
+    margin:0;
+    padding:10px;
 }
 
 h1{
-    color:blue;
+    color:#0056ff;
+    font-size:32px;
+    margin-bottom:5px;
+}
+
+p{
+    color:#666;
+    font-size:14px;
+}
+
+.caja{
+    width:95%;
+    max-width:750px;
+    margin:auto;
+    padding:20px;
+    background:white;
+    border-radius:20px;
+    box-shadow:0 0 15px rgba(0,0,0,.1);
+    margin-bottom:20px;
+}
+
+input,
+select,
+textarea{
+
+    width:100%;
+    padding:14px;
+    margin:8px 0;
+    border-radius:10px;
+    border:1px solid #ccc;
+    box-sizing:border-box;
+    font-size:16px;
+}
+
+textarea{
+    height:100px;
+    resize:none;
 }
 
 button{
+    width:100%;
     padding:15px;
-    margin:10px;
-    font-size:18px;
-    border-radius:10px;
+    margin-top:10px;
+    font-size:16px;
+    border:none;
+    border-radius:12px;
     cursor:pointer;
+    background:#007bff;
+    color:white;
+    font-weight:bold;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+.motoContainer{
+    position:relative;
+    width:100%;
+    max-width:700px;
+    margin:auto;
+}
+
+.motoContainer img{
+    width:100%;
+    border-radius:15px;
+}
+
+.punto{
+    position:absolute;
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    color:white;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.bloqueado{
+    background:gray;
+}
+
+.activo{
+    background:red;
+}
+
+.completado{
+    background:green;
+}
+
+table{
+    width:100%;
+    display:block;
+    overflow-x:auto;
+    background:white;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:10px;
+}
+
+@media(max-width:768px){
+
+body{
+    zoom:1.12;
+}
+
+h1{
+    font-size:25px;
+}
+
+.caja{
+    width:98%;
+    padding:15px;
+}
+
+input,
+select,
+textarea,
+button{
+
+font-size:18px;
+
+}
+
+.motoContainer{
+
+transform:scale(1.35);
+transform-origin:top center;
+
+margin-top:70px;
+margin-bottom:120px;
+
+}
+
+.punto{
+
+width:42px;
+height:42px;
+font-size:14px;
+
+}
+
 }
