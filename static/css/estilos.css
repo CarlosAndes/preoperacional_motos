@@ -1,5 +1,5 @@
 body{
-    font-family: Arial, sans-serif;
+    font-family:Arial,sans-serif;
     background:#f4f4f4;
     text-align:center;
     margin:0;
@@ -24,14 +24,14 @@ p{
     padding:20px;
     background:white;
     border-radius:20px;
-    box-shadow:0 0 15px rgba(0,0,0,.1);
+    box-shadow:0 0 15px rgba(0,0,0,.10);
     margin-bottom:20px;
+    box-sizing:border-box;
 }
 
 input,
 select,
 textarea{
-
     width:100%;
     padding:14px;
     margin:8px 0;
@@ -57,44 +57,63 @@ button{
     background:#007bff;
     color:white;
     font-weight:bold;
+    transition:.3s;
 }
 
 button:hover{
     opacity:.9;
+    transform:translateY(-2px);
 }
 
 .motoContainer{
     position:relative;
     width:100%;
-    max-width:700px;
+    max-width:550px;
     margin:auto;
+    padding:20px;
 }
 
 .motoContainer img{
     width:100%;
+    height:auto;
     border-radius:15px;
 }
 
 .punto{
     position:absolute;
-    width:40px;
-    height:40px;
+
+    width:38px;
+    height:38px;
+
     border-radius:50%;
+    border:none;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
     color:white;
     font-size:13px;
     font-weight:bold;
+
+    transform:translate(-50%,-50%);
+
+    box-shadow:
+    0 4px 12px rgba(0,0,0,.30);
+
+    z-index:999;
 }
 
 .bloqueado{
-    background:gray;
+    background:#8d8d8d;
 }
 
 .activo{
-    background:red;
+    background:#ff1e1e;
 }
 
 .completado{
-    background:green;
+    background:#14a44d;
 }
 
 table{
@@ -111,43 +130,40 @@ th,td{
 
 @media(max-width:768px){
 
-body{
-    zoom:1.12;
-}
-
 h1{
-    font-size:25px;
+font-size:24px;
 }
 
 .caja{
-    width:98%;
-    padding:15px;
+width:98%;
+padding:15px;
 }
 
 input,
 select,
 textarea,
 button{
-
-font-size:18px;
-
+font-size:16px;
 }
 
 .motoContainer{
 
-transform:scale(1.35);
+max-width:100%;
+
+transform:scale(1.10);
+
 transform-origin:top center;
 
-margin-top:70px;
-margin-bottom:120px;
+margin-top:30px;
+margin-bottom:80px;
 
 }
 
 .punto{
 
-width:42px;
-height:42px;
-font-size:14px;
+width:36px;
+height:36px;
+font-size:12px;
 
 }
 
