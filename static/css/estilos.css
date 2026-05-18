@@ -3,129 +3,243 @@ body{
     background:#f4f4f4;
     text-align:center;
     margin:0;
-    padding:10px;
+    padding:12px;
 }
 
 h1{
     color:#0056ff;
-    font-size:32px;
-    margin-bottom:5px;
+    font-size:28px;
+    margin:10px 0 5px;
 }
 
 p{
     color:#666;
     font-size:14px;
+    margin-bottom:18px;
 }
 
 .caja{
     width:95%;
-    max-width:750px;
+    max-width:760px;
     margin:auto;
     padding:20px;
+
     background:white;
-    border-radius:20px;
-    box-shadow:0 0 15px rgba(0,0,0,.10);
+
+    border-radius:22px;
+
+    box-shadow:
+    0 6px 18px rgba(0,0,0,.10);
+
     margin-bottom:20px;
+
     box-sizing:border-box;
 }
 
 input,
 select,
 textarea{
+
     width:100%;
     padding:14px;
+
     margin:8px 0;
-    border-radius:10px;
-    border:1px solid #ccc;
+
+    border-radius:12px;
+
+    border:1px solid #dcdcdc;
+
     box-sizing:border-box;
+
     font-size:16px;
+
+    background:#fafafa;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+
+outline:none;
+
+border-color:#007bff;
+
+box-shadow:
+0 0 8px rgba(0,123,255,.25);
+
 }
 
 textarea{
-    height:100px;
-    resize:none;
+height:100px;
+resize:none;
 }
 
 button{
-    width:100%;
-    padding:15px;
-    margin-top:10px;
-    font-size:16px;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    background:#007bff;
-    color:white;
-    font-weight:bold;
-    transition:.3s;
+
+width:100%;
+
+padding:14px;
+
+margin-top:10px;
+
+background:#007bff;
+
+color:white;
+
+font-size:16px;
+
+font-weight:bold;
+
+border:none;
+
+border-radius:12px;
+
+cursor:pointer;
+
+transition:.25s;
+
+box-shadow:
+0 4px 10px rgba(0,0,0,.15);
+
 }
 
 button:hover{
-    opacity:.9;
-    transform:translateY(-2px);
+
+opacity:.95;
+
+transform:
+translateY(-2px);
+
+}
+
+.btnMoto{
+
+width:48%;
+
+display:inline-block;
+
+margin:4px;
+
 }
 
 .motoContainer{
-    position:relative;
-    width:100%;
-    max-width:550px;
-    margin:auto;
-    padding:20px;
+
+position:relative;
+
+width:100%;
+
+max-width:520px;
+
+margin:auto;
+
+padding:15px;
+
+background:white;
+
+border-radius:20px;
+
+box-shadow:
+0 4px 15px rgba(0,0,0,.08);
+
+overflow:hidden;
+
 }
 
 .motoContainer img{
-    width:100%;
-    height:auto;
-    border-radius:15px;
+
+width:100%;
+
+height:auto;
+
+display:block;
+
+border-radius:15px;
+
 }
 
 .punto{
-    position:absolute;
 
-    width:38px;
-    height:38px;
+position:absolute;
 
-    border-radius:50%;
-    border:none;
+width:38px;
+height:38px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+display:flex;
 
-    color:white;
-    font-size:13px;
-    font-weight:bold;
+align-items:center;
 
-    transform:translate(-50%,-50%);
+justify-content:center;
 
-    box-shadow:
-    0 4px 12px rgba(0,0,0,.30);
+transform:
+translate(-50%,-50%);
 
-    z-index:999;
+border-radius:50%;
+
+color:white;
+
+font-size:13px;
+font-weight:bold;
+
+border:none;
+
+box-shadow:
+0 5px 15px rgba(0,0,0,.35);
+
+z-index:999;
+
+transition:.3s;
+
+}
+
+.punto:hover{
+
+transform:
+translate(-50%,-50%)
+scale(1.1);
+
 }
 
 .bloqueado{
-    background:#8d8d8d;
+background:#8b8b8b;
 }
 
 .activo{
-    background:#ff1e1e;
+background:#ff1e1e;
 }
 
 .completado{
-    background:#14a44d;
+background:#18a84b;
 }
 
 table{
-    width:100%;
-    display:block;
-    overflow-x:auto;
-    background:white;
-    border-collapse:collapse;
+
+width:100%;
+
+display:block;
+
+overflow-x:auto;
+
+background:white;
+
+border-collapse:collapse;
+
+border-radius:15px;
+
+}
+
+th{
+
+background:#007bff;
+color:white;
+
 }
 
 th,td{
-    padding:10px;
+
+padding:10px;
+
+border:1px solid #eee;
+
 }
 
 @media(max-width:768px){
@@ -134,35 +248,43 @@ h1{
 font-size:24px;
 }
 
-.caja{
-width:98%;
-padding:15px;
+p{
+font-size:13px;
 }
 
-input,
-select,
-textarea,
-button{
-font-size:16px;
+.caja{
+
+width:98%;
+
+padding:15px;
+
+}
+
+.btnMoto{
+
+width:100%;
+
+margin:6px 0;
+
 }
 
 .motoContainer{
 
 max-width:100%;
 
-transform:scale(1.10);
+margin-top:20px;
 
-transform-origin:top center;
+margin-bottom:70px;
 
-margin-top:30px;
-margin-bottom:80px;
+padding:10px;
 
 }
 
 .punto{
 
-width:36px;
-height:36px;
+width:34px;
+height:34px;
+
 font-size:12px;
 
 }
