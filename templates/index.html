@@ -34,16 +34,181 @@ href="{{ url_for('static', filename='css/estilos.css') }}">
 </select><br>
 <input placeholder='Escriba nombre' id='otroNombre' style='display:none'><br>
 <input placeholder='Documento' id='documento'><br>
-<input placeholder='Placa' id='placa' style='text-transform:uppercase' oninput='this.value=this.value.toUpperCase()'>
-<input placeholder='Kilometraje' id='kilometraje'><br>
+
+<select id='placa'>
+
+<option value=''>
+Seleccione una placa
+</option>
+
+<option value='TLJ39F'>
+TLJ39F
+</option>
+
+<option value='NWJ76F'>
+NWJ76F
+</option>
+
+<option value='NWJ06F'>
+NWJ06F
+</option>
+
+<option value='XXK43G'>
+XXK43G
+</option>
+
+</select>
+
+
+<div id='panelVehiculo'
+
+style='
+margin-top:20px;
+padding:25px;
+background:#f4f4f4;
+border-radius:15px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:30px;
+flex-wrap:wrap;
+'>
+<h3>
+Información vehículo
+</h3>
+
+<img
+id='fotoVehiculo'
+src=''
+width='260'
+
+style='
+display:none;
+border-radius:15px;
+box-shadow:0 4px 15px rgba(0,0,0,.15);
+object-fit:contain;
+background:white;
+padding:10px;
+'
+>
+
+<div>
+
+<p id='tipoMoto'>
+Tipo: -
+</p>
+
+<p id='soatMoto'>
+SOAT: -
+</p>
+
+<p id='tecnoMoto'>
+Tecnomecánica: -
+</p>
+
+</div>
+
+</div>
+
+<div
+style="
+margin-top:15px;
+padding:10px;
+border-top:1px solid #ddd;
+">
+
+
+
+
+<input
+placeholder='Kilometraje'
+id='kilometraje'><br>
+
+
 <label>Fecha y hora</label><br>
 <input type='datetime-local' id='fecha' readonly><br><br>
-<button class='btnMoto' onclick="mostrarMoto('cambios')">🏍️ Moto cambios</button>
-<button class='btnMoto' onclick="mostrarMoto('automatica')">🛵 Moto automática</button>
+<label>Tipo de moto</label>
+
+<input
+id='tipoSeleccionado'
+readonly
+placeholder='Se detectará automáticamente'>
+<br><br>
+
+<button
+onclick='iniciarInspeccion()'>
+
+▶ Iniciar inspección
+
+</button>
+<br><br>
+
 </div>
-<div id='resultado'></div><div id='resultadoExtra'></div><br>
-<h2>Resumen inspección</h2>
-<table border='1' width='1000'><tr><th>Paso</th><th>Parte</th><th>Estado</th><th>Observación</th><th>Foto</th></tr><tbody id='tablaEstados'></tbody></table>
+<div id='resultado'></div>
+
+<div id='resultadoExtra'></div>
+
+<br>
+
+<div class='caja'>
+
+<h2
+style='text-align:center'>
+
+Resumen inspección
+
+</h2>
+
+<table
+id='tablaResumen'
+
+style='
+width:100%;
+border-collapse:collapse;
+background:white;
+'>
+
+<thead>
+
+<tr
+style='
+background:#007bff;
+color:white;
+'>
+
+<th style='padding:15px'>
+Paso
+</th>
+
+<th>
+Parte
+</th>
+
+<th>
+Estado
+</th>
+
+<th>
+Observación
+</th>
+
+<th>
+Foto
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id='tablaEstados'>
+
+</tbody>
+
+</table>
+
+</div>
+
 <script>
 const motoCambios="{{ url_for('static', filename='img/moto_cambios.jpeg') }}";
 const motoAutomatica="{{ url_for('static', filename='img/moto_automatica.jpeg') }}";
@@ -130,11 +295,10 @@ secuencia=secuenciaAutomatica;
 }
 
 let imagen=
-tipo=='cambios'
-?
-motoCambios
-:
-motoAutomatica;
+
+document.getElementById(
+'fotoVehiculo'
+).src
 
 
 let html=
@@ -193,12 +357,26 @@ document.getElementById(
 
 `<div class='caja'>
 
-<h2>
+<h2
+style='
+color:#0066ff;
+text-align:center;
+'>
+
 Paso ${i+1}
+
 </h2>
 
-<h3>
+<h3
+style='
+text-align:center;
+font-size:24px;
+margin-bottom:25px;
+color:#333;
+'>
+
 ${secuencia[i].parte}
+
 </h3>
 
 <select id='estado'>
@@ -217,13 +395,27 @@ ${secuencia[i].parte}
 
 </select>
 
-<br>
+<br><br>
 
 <textarea
-id='observacion'>
-</textarea>
+id='observacion'
 
-<br>
+placeholder='✍️ Escriba observaciones si encuentra alguna novedad...'
+
+style='
+width:100%;
+height:120px;
+padding:15px;
+border-radius:15px;
+border:1px solid #dcdcdc;
+font-size:16px;
+resize:none;
+box-sizing:border-box;
+outline:none;
+margin-top:10px;
+'>
+</textarea>
+<br><br>
 
 <input
 type='file'
@@ -231,14 +423,14 @@ id='foto'
 accept='image/*'
 onchange='mostrarVista(event)'>
 
-<br>
+<br><br>
 
 <img
 id='preview'
 width='150'
 style='display:none;border-radius:10px'>
 
-<br>
+<br><br>
 
 <button
 onclick='guardar(${i})'>
@@ -266,51 +458,64 @@ document.getElementById(
 ).value;
 
 
-let observacion=
+let observacion =
 document.getElementById(
 'observacion'
 ).value
+
 ||
+
 'Sin observación';
 
 
-let foto=
+
+let foto =
 document.getElementById(
 'foto'
 ).files[0]?.name
+
 ||
+
 'Sin foto';
 
 
+
+let tabla =
+
 document.getElementById(
 'tablaEstados'
-).innerHTML+=
+);
 
-`
+
+
+tabla.innerHTML += `
 
 <tr>
 
-<td>${i+1}</td>
+<td style="padding:12px;text-align:center">
+${i+1}
+</td>
 
-<td>
+<td style="padding:12px">
 ${secuencia[i].parte}
 </td>
 
-<td>
+<td style="padding:12px">
 ${estado}
 </td>
 
-<td>
+<td style="padding:12px">
 ${observacion}
 </td>
 
-<td>
+<td style="padding:12px">
 ${foto}
 </td>
 
 </tr>
 
 `;
+
 
 
 let datos=
@@ -449,7 +654,7 @@ setTimeout(
 pasoActual
 ),
 
-500
+900
 
 );
 
@@ -507,5 +712,230 @@ imagen.style.display='block';
 }
 
 </script>
+<script>
+
+document
+.getElementById(
+'placa'
+)
+
+.addEventListener(
+
+'change',
+
+async function(){
+
+let placa=this.value
+
+if(!placa){
+
+return
+
+}
+
+let respuesta=
+await fetch(
+
+'/vehiculo/'+placa
+
+)
+
+let datos=
+await respuesta.json()
+
+
+document
+.getElementById(
+'tipoMoto'
+)
+.innerText=
+
+'Tipo: '+datos.tipo
+
+document
+.getElementById(
+'tipoSeleccionado'
+).value=
+
+datos.tipo
+
+
+let hoy = new Date()
+
+let fechaSoat =
+new Date(
+datos.soat
+)
+
+let fechaTecno =
+new Date(
+datos.tecnomecanica
+)
+
+
+let diasSoat=
+
+Math.ceil(
+
+(fechaSoat-hoy)
+
+/
+
+(1000*60*60*24)
+
+)
+
+
+let diasTecno=
+
+Math.ceil(
+
+(fechaTecno-hoy)
+
+/
+
+(1000*60*60*24)
+
+)
+
+
+
+let textoSoat=
+
+'🛡️ SOAT: '+datos.soat
+
+
+if(
+diasSoat<=365
+){
+
+textoSoat +=
+
+' ⚠️ Vence en '
+
++
+
+diasSoat
+
++
+
+' días'
+
+}
+
+
+document
+.getElementById(
+'soatMoto'
+)
+.innerText=
+
+textoSoat
+
+
+
+let textoTecno=
+
+'📋 Tecnomecánica: '
+
++
+
+datos.tecnomecanica
+
+
+if(
+diasTecno<=365
+){
+
+textoTecno +=
+
+' ⚠️ Vence en '
+
++
+
+diasTecno
+
++
+
+' días'
+
+}
+
+
+document
+.getElementById(
+'tecnoMoto'
+)
+.innerText=
+
+textoTecno
+
+
+let foto=
+
+document.getElementById(
+'fotoVehiculo'
+)
+
+foto.src=
+
+'/static/vehiculos/'+
+datos.foto
+
+
+foto.style.display=
+'block'
+
+
+if(datos.tipo=='Automática'){
+
+    mostrarMoto(
+        'automatica'
+    )
+
+}
+
+if(datos.tipo=='Cambios'){
+
+    mostrarMoto(
+        'cambios'
+    )
+
+}
+
+})
+function iniciarInspeccion(){
+
+let tipo=
+
+document.getElementById(
+'tipoSeleccionado'
+).value
+
+
+if(tipo=='Automática'){
+
+    mostrarMoto(
+        'automatica'
+    )
+
+}
+
+
+if(tipo=='Cambios'){
+
+    mostrarMoto(
+        'cambios'
+    )
+
+}
+
+}
+
+
+</script>
+
+
+
 </body>
 </html>
