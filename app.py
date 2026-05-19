@@ -85,6 +85,7 @@ def guardar():
     VALUES(?,?,?,?,?,?,?,?,?,?)
     """,(
     datos['fecha'],
+
     datos['encargado'],
     datos['documento'],
     datos['placa'],
@@ -100,11 +101,13 @@ def guardar():
     conexion.close()
 
     try:
+
         fecha=datos['fecha'].split("T")[0]
         hora=datos['fecha'].split("T")[1][:5]
 
-        requests.post(
+        respuesta=requests.post(
             GOOGLE_SCRIPT_URL,
+
             json={
                 "fecha":fecha,
                 "hora":hora,
@@ -118,9 +121,15 @@ def guardar():
                 "observacion":datos['observacion'],
                 "foto":nombre_foto
             }
+
         )
+
+        print("STATUS:",respuesta.status_code)
+        print("RESPUESTA:",respuesta.text)
+
     except Exception as e:
-        print(e)
+
+        print("ERROR GOOGLE:",e)
 
     fecha_excel=datos['fecha'].split('T')[0]
 
